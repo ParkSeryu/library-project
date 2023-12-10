@@ -4,16 +4,17 @@ import com.group.libraryapp.dto.user.request.UserCreateRequest;
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.dto.user.response.UserResponse;
 import com.group.libraryapp.repository.user.UserRepository;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
 
     private final UserRepository repository;
 
-    public UserService(JdbcTemplate jdbcTemplate) {
-        repository = new UserRepository(jdbcTemplate);
+    public UserService(UserRepository userRepository) {
+        this.repository = userRepository;
     }
 
     public void saveUser(UserCreateRequest request) {
@@ -23,7 +24,6 @@ public class UserService {
     public List<UserResponse> getUsers(){
         return repository.getUsers();
     }
-
 
     public void updateUser(UserUpdateRequest request) {
         if (repository.isUserNotExist(request.getId())) {
