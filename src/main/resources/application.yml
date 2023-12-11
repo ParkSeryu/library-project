@@ -4,3 +4,14 @@ spring:
     username: "root"
     password: "!dkdlxl1234"
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none # Spring이 시작할 때 DB에 있는 테이블을 어떻게 처리할지
+                     # none : 별다른 조치를 하지 않는다.
+                     # create : 기존 테이블이 있다면 삭제 후 다시 생성한다.
+                     # update : 객체와 테이블이 다른 부분만 변경한다.
+    properties:
+      hibernate:
+        show_sql: true # jpa를 사용해 sql을 날릴때 해당 sql을 보여줄 것인가.
+        format_sql: true # 해당 sql을 보여줄때 보기좋게 해줄것인가.
+        dialect: org.hibernate.dialect.MySQL8Dialect # JPA가 알아서 DB끼리 다른 SQL을 조금씩 수정해준다.

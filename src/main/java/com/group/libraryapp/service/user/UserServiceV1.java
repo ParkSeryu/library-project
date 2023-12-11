@@ -3,25 +3,24 @@ package com.group.libraryapp.service.user;
 import com.group.libraryapp.dto.user.request.UserCreateRequest;
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.dto.user.response.UserResponse;
-import com.group.libraryapp.repository.user.UserRepository;
+import com.group.libraryapp.repository.user.UserJdbcRepository;
 import java.util.List;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserServiceV1 {
 
-    private final UserRepository repository;
+    private final UserJdbcRepository repository;
 
-    public UserService(UserRepository userRepository) {
-        this.repository = userRepository;
+    public UserServiceV1(UserJdbcRepository userJdbcRepository) {
+        this.repository = userJdbcRepository;
     }
 
     public void saveUser(UserCreateRequest request) {
         repository.saveUser(request.getName(), request.getAge());
     }
 
-    public List<UserResponse> getUsers(){
+    public List<UserResponse> getUsers() {
         return repository.getUsers();
     }
 
@@ -40,4 +39,6 @@ public class UserService {
 
         repository.deleteUser(name);
     }
+
+
 }
