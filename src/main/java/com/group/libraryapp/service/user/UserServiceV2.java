@@ -24,7 +24,7 @@ public class UserServiceV2 {
     @Transactional // 트랜잭션, 메소드내의 내용은 한몸이다.
     public void saveUser(UserCreateRequest request) {
         User u = userRepository.save(new User(request.getName(), request.getAge()));
-        throw new IllegalArgumentException(); // 이러면 롤백되어야함
+//        throw new IllegalArgumentException(); // 이러면 롤백되어야함
     }
     @Transactional(readOnly = true)
     public List<UserResponse> getUsers() {
@@ -57,9 +57,7 @@ public class UserServiceV2 {
             throw new IllegalArgumentException();
         }
 
-        User user = userRepository.findByName(name);
+        User user = userRepository.findByName(name).orElseThrow(IllegalAccessError::new);
         userRepository.delete(user);
     }
-
-
 }

@@ -1,10 +1,10 @@
 package com.group.libraryapp.domain.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.group.libraryapp.domain.loanhistory.UserLoanHistory;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -22,6 +22,9 @@ public class User {
 
     @Column(nullable = false, length = 20, name = "age")
     private Integer age;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserLoanHistory> userLoanHistories = new ArrayList<>();
 
     public User(String name, Integer age) {
         if (name == null || name.isBlank()) {
@@ -44,7 +47,19 @@ public class User {
         return age;
     }
 
-    public void updateName(String name){
+    public void updateName(String name) {
         this.name = name;
     }
+
+    public void loanBook(String bookName) {
+        this.userLoanHistories.add(new UserLoanHistory(this, bookName));
+    }
+
+    public void returnBook(String bookName) {
+        UserLoanHistory targetHistory = this.userLoanHistories.stream().filter(history -> history.getBookName().equals(bookName))
+                .findFirst()
+                .orElseThrow(IllegalAccessError::new);
+        targetHistory.updateIsReturn(true);
+    }
+
 }

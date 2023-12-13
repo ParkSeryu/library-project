@@ -2,7 +2,7 @@ spring:
   datasource:
     url: "jdbc:mysql://localhost/library" # jdbc를 통해 mysql db library 테이블에 접근한다.
     username: "root"
-    password: "!dkdlxl1234"
+    password: "root"
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
